@@ -10,17 +10,37 @@
 <body>
   <div class="container">
     <h1 class="my-5">Cek Ketersediaan Lapangan Bulutangkis</h1>
-    <form action="cek_lapangan.php" method="post">
+    <form>
       <div class="form-group">
         <label for="tanggal">Tanggal:</label>
         <input type="date" class="form-control" id="tanggal" name="tanggal" required>
       </div>
-      <button type="submit" class="btn btn-primary">Cek Ketersediaan</button>
+      <button type="button" class="btn btn-primary" onclick="loadTable()">Cek Ketersediaan</button>
     </form>
+
+    <div class="table-container"></div>
   </div>
   <!-- link script bootstrap -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNS3Xa" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+  <script>
+    const loadTable = () =>{
+        const tanggal = document.querySelector('#tanggal').value
+        console.log(tanggal);
+        var xmlHttpReq = new XMLHttpRequest();
+        xmlHttpReq.onreadystatechange = function(){
+          console.log(this.status);
+            if(this.readyState == 4 && this.status == 200){
+              console.log(this.responseText);
+                const tableContainer = document.querySelector('.table-container')
+                tableContainer.innerHTML = this.responseText;
+            }
+        }
+
+        xmlHttpReq.open("GET", `get-lapangan.php?tanggal=${tanggal}`)
+        xmlHttpReq.send()
+    }
+  </script>
 </body>
 </html>
