@@ -13,6 +13,6 @@ include('components/head.php');
 include('components/nav.php');
 ?>
 
-<h1>SELAMAT DATANG, <?= $_SESSION['username'] ?> </h1>
-
-<a href="./logout.php">Logout</a>
+<div class="container">
+    <h1>SELAMAT DATANG, <?= $_SESSION['username'] ?> </h1>
+</div>

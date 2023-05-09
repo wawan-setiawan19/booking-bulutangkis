@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 17, 2023 at 10:27 AM
+-- Generation Time: May 09, 2023 at 04:14 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -51,17 +51,21 @@ CREATE TABLE `pemesanan` (
   `id_lapangan` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `tanggal` date NOT NULL,
-  `waktu` int(11) NOT NULL
+  `waktu` int(11) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `expired` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `pemesanan`
 --
 
-INSERT INTO `pemesanan` (`id`, `id_lapangan`, `id_user`, `tanggal`, `waktu`) VALUES
-(1, 1, 6, '2023-04-17', 1),
-(2, 2, 6, '2023-04-17', 5),
-(3, 1, 6, '2023-04-18', 4);
+INSERT INTO `pemesanan` (`id`, `id_lapangan`, `id_user`, `tanggal`, `waktu`, `status`, `expired`) VALUES
+(1, 1, 6, '2023-04-17', 1, 'DONE', '2023-05-08 14:27:57'),
+(2, 2, 6, '2023-04-17', 5, 'DONE', '2023-05-08 14:27:57'),
+(3, 1, 6, '2023-04-18', 4, 'DONE', '2023-05-08 14:27:57'),
+(6, 1, 8, '2023-05-09', 2, 'MENUNGGU PEMBAYARAN', '2023-05-08 19:45:41'),
+(7, 1, 7, '2023-05-09', 1, 'MENUNGGU PEMBAYARAN', '2023-05-08 21:11:44');
 
 -- --------------------------------------------------------
 
@@ -86,7 +90,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `name`, `photo`) VALUES
 (1, 'admin', 'admin@gmail.com', '$2a$12$LwgF4wxCBJfI8TpYtqncAukNu.IFnVy1REzKB3mgnTZ.EmDQ10dNi', 'admin', 'Admin', 'default.svg'),
 (5, 'testing2', 'testing2@gmail.com', '$2y$10$kYEqhvoibXlhr6oZlgw.W.zmwDCx.6VvKsjh9BuxWOeI9YLHilx5K', 'user', 'testing2', 'default.svg'),
-(6, 'user', 'user@gmail.com', '$2y$10$j3w0JI0TH3auowBA/0BIBeV.hzcruve4Kw.y7GAbrxIHaQqd3tvAG', '', '', 'default.svg');
+(6, 'user', 'user@gmail.com', '$2y$10$j3w0JI0TH3auowBA/0BIBeV.hzcruve4Kw.y7GAbrxIHaQqd3tvAG', '', '', 'default.svg'),
+(7, 'antoni', 'antoni@gmail.com', '$2y$10$aB7QQyqQNTCcKH3K3R9hV.gSXADkP5yC5zx2HcMGx.fIL5MoyQEKy', '', '', 'default.svg');
 
 --
 -- Indexes for dumped tables
@@ -125,13 +130,13 @@ ALTER TABLE `lapangan`
 -- AUTO_INCREMENT for table `pemesanan`
 --
 ALTER TABLE `pemesanan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
