@@ -1,7 +1,9 @@
 <?php 
 
 require_once("config.php");
-
+  $lapang = isset($_GET['lapang'])?$_GET['lapang']:'';
+  $jam = isset($_GET['jam'])?$_GET['jam']:'';
+  $tanggal = isset($_GET['tanggal'])?$_GET['tanggal']:'';
 //memeriksa apakah form login telah di-submit
 if(isset($_POST['login'])) {
 
@@ -12,26 +14,34 @@ if(isset($_POST['login'])) {
     //memperoleh nilai terenkripsi dari username yang ada di dalam database
     $query = "SELECT password FROM users WHERE username = '$username'";
     $result = mysqli_query($conn, $query);
-    $row = mysqli_fetch_assoc($result);
-    $hashed_password = $row['password'];
-  
-    //memeriksa apakah nilai terenkripsi dari input pengguna sama dengan nilai terenkripsi yang tersimpan dalam database
-    if(password_verify($password, $hashed_password)) {
-  
-      //menangkap nilai role dari pengguna yang berhasil login
-      $query = "SELECT role FROM users WHERE username = '$username'";
-      $result = mysqli_query($conn, $query);
+    if (mysqli_num_rows($result)==1) {
       $row = mysqli_fetch_assoc($result);
-      $role = $row['role'];
+      $hashed_password = $row['password'];
+    
+      //memeriksa apakah nilai terenkripsi dari input pengguna sama dengan nilai terenkripsi yang tersimpan dalam database
+      if(password_verify($password, $hashed_password)) {
+    
+        //menangkap nilai role dari pengguna yang berhasil login
+        $query = "SELECT * FROM users WHERE username = '$username'";
+        $result = mysqli_query($conn, $query);
+        $row = mysqli_fetch_assoc($result);
+        $role = $row['role'];
+        session_start();
+        $_SESSION['username'] = $username;
+        $_SESSION['id'] = $row['id'];
+    }
 
-      session_start();
-      $_SESSION['username'] = $username;
   
       //memeriksa role pengguna dan mengarahkan ke halaman dashboard yang sesuai
       if($role == 'admin') {
         header("Location: admin/index.php");
       } else {
-        header("Location: dashboard.php");
+        if($lapang){
+          $link = "./booking.php?lapang=".$lapang."&jam=".$jam."&tanggal=".$tanggal;
+          header('Location:'.$link);
+        }else{
+          header("Location: dashboard.php");
+        }
       }
   
     } else {
@@ -43,23 +53,11 @@ if(isset($_POST['login'])) {
 
 ?>
 
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-</head>
-<body class="bg-light">
+<?php require_once("./components/head.php");?>
 <?php require_once("./components/nav.php");?>
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
+        <div class="col-md-12">
         <h4>Masuk untuk Booking</h4>
         <p>Belum punya akun? <a href="register.php">Daftar di sini</a></p>
 
@@ -84,6 +82,3 @@ if(isset($_POST['login'])) {
 
     </div>
 </div>
-    
-</body>
-</html>

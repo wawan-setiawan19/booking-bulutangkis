@@ -1,29 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cek Ketersediaan Lapangan Bulutangkis</title>
-  <!-- link stylesheet bootstrap -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-<body>
+  <?php
+    session_start();
+    require("components/head.php");
+    require("components/nav.php");
+    $month = date('m');
+    $day = date('d');
+    $year = date('Y');
+
+    $today = $year . '-' . $month . '-' . $day;
+  ?>
   <div class="container">
     <h1 class="my-5">Cek Ketersediaan Lapangan Bulutangkis</h1>
     <form>
       <div class="form-group">
         <label for="tanggal">Tanggal:</label>
-        <input type="date" class="form-control" id="tanggal" name="tanggal" required>
+        <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?= $today ?>" required>
       </div>
-      <button type="button" class="btn btn-primary" onclick="loadTable()">Cek Ketersediaan</button>
+      <button type="button" class="btn btn-primary mt-2" onclick="loadTable()">Cek Ketersediaan</button>
     </form>
 
     <div class="table-container"></div>
   </div>
-  <!-- link script bootstrap -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
   <script>
     const loadTable = () =>{
         const tanggal = document.querySelector('#tanggal').value
@@ -42,5 +38,3 @@
         xmlHttpReq.send()
     }
   </script>
-</body>
-</html>

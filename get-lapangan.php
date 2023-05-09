@@ -46,10 +46,14 @@ if (mysqli_num_rows($result) > 0) {
                 <?php if (isset($data[$lapangan['id']][$i])) {
                     $status = 'bg-danger';
                 }else{
-                    $status = 'bg-success';
+                    $status = '';
                 }
                 ?>
-                <td class=<?= $status ?> ></td>
+                <td class=<?= $status ?> >
+                    <?php if($status=='') : ?>
+                        <a class="btn btn-primary" href="./booking.php?lapang=<?=$lapangan['id']?>&jam=<?=$i?>&tanggal=<?=$tanggal?>">Booking</a>
+                    <?php endif ?>
+                </td>
             <?php endforeach ?>
         </tr>
         <?php endfor ?>
