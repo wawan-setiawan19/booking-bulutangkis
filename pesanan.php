@@ -58,7 +58,8 @@ require_once('components/nav.php');
                     </div>
                 </div>
                 <?php if($row['status']=="MENUNGGU PEMBAYARAN") : ?>
-                    <a id="bayarBtn" class="btn btn-primary">Bayar Pesanan</a>
+                    <a id="bayarBtn" class="btn btn-success">Bayar Pesanan</a>
+                    <a id="gantiBtn" href="./ganti-pesanan.php?idp=<?=$row['id']?>&tgl=<?= $row['tanggal']?>&lapangan=<?= $row['id_lapangan'] ?>" class="btn btn-primary">Ubah Pesanan</a>
                     <a id="hapusBtn" onclick="hapusPesanan(<?= $row['id']?>)" class="btn btn-danger">Hapus Pesanan</a>
                 <?php endif ?>
                 <div class="message"></div>
@@ -68,8 +69,6 @@ require_once('components/nav.php');
 </div>
 
 <script>
-    const gantiBtn = document.querySelector("#gantiBtn")
-
     const hapusPesanan = (id) =>{
         var xmlHttpReq = new XMLHttpRequest();
         xmlHttpReq.onreadystatechange = function(){
