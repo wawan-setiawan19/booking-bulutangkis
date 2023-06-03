@@ -13,6 +13,9 @@ require_once('components/nav.php');
 ?>
 
 <div class="container">
+    <?php if(mysqli_num_rows($result) == 0) : ?> 
+        <h1>Mohon maaf tidak ada pesanan</h1>
+    <?php endif ?>
     <?php while($row = mysqli_fetch_assoc($result)) :?>
         <div class="card mt-3">
             <div class="card-body">
@@ -58,7 +61,7 @@ require_once('components/nav.php');
                     </div>
                 </div>
                 <?php if($row['status']=="MENUNGGU PEMBAYARAN") : ?>
-                    <a id="bayarBtn" class="btn btn-success">Bayar Pesanan</a>
+                    <a id="bayarBtn" href="./bayar-pesanan.php?idp=<?=$row['id']?>" class="btn btn-success">Bayar Pesanan</a>
                     <a id="gantiBtn" href="./ganti-pesanan.php?idp=<?=$row['id']?>&tgl=<?= $row['tanggal']?>&lapangan=<?= $row['id_lapangan'] ?>" class="btn btn-primary">Ubah Pesanan</a>
                     <a id="hapusBtn" onclick="hapusPesanan(<?= $row['id']?>)" class="btn btn-danger">Hapus Pesanan</a>
                 <?php endif ?>

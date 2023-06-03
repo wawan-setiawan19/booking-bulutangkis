@@ -22,6 +22,8 @@ require_once('components/nav.php');
                 $status = 'bg-primary';
             }else if($row['status'] == "LUNAS"){
                 $status = 'bg-success';
+            }else if($row['status'] == "MENUNGGU VALIDASI"){
+                $status = 'bg-warning';
             }else{
                 $status = 'bg-danger';
             }
