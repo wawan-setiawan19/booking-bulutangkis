@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2023 at 04:14 AM
+-- Generation Time: Jun 03, 2023 at 05:46 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -20,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_booking_bultang`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bukti_pembayaran`
+--
+
+CREATE TABLE `bukti_pembayaran` (
+  `id_bukti` int(11) NOT NULL,
+  `screenshot` varchar(50) NOT NULL,
+  `id_pemesanan` int(11) NOT NULL,
+  `keperluan` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bukti_pembayaran`
+--
+
+INSERT INTO `bukti_pembayaran` (`id_bukti`, `screenshot`, `id_pemesanan`, `keperluan`) VALUES
+(1, 'UseCase Absensi.png', 7, 'DP'),
+(2, 'Screen Shot 2023-05-04 at 12.36.01.png', 13, 'LUNAS');
 
 -- --------------------------------------------------------
 
@@ -61,11 +82,18 @@ CREATE TABLE `pemesanan` (
 --
 
 INSERT INTO `pemesanan` (`id`, `id_lapangan`, `id_user`, `tanggal`, `waktu`, `status`, `expired`) VALUES
-(1, 1, 6, '2023-04-17', 1, 'DONE', '2023-05-08 14:27:57'),
-(2, 2, 6, '2023-04-17', 5, 'DONE', '2023-05-08 14:27:57'),
-(3, 1, 6, '2023-04-18', 4, 'DONE', '2023-05-08 14:27:57'),
-(6, 1, 8, '2023-05-09', 2, 'MENUNGGU PEMBAYARAN', '2023-05-08 19:45:41'),
-(7, 1, 7, '2023-05-09', 1, 'MENUNGGU PEMBAYARAN', '2023-05-08 21:11:44');
+(1, 1, 6, '2023-04-17', 1, 'LUNAS', '2023-06-03 15:13:10'),
+(2, 2, 6, '2023-04-17', 5, 'LUNAS', '2023-06-03 15:13:10'),
+(3, 1, 6, '2023-04-18', 4, 'LUNAS', '2023-06-03 15:13:10'),
+(6, 1, 8, '2023-05-09', 2, 'LUNAS', '2023-06-03 15:13:10'),
+(7, 1, 7, '2023-05-09', 1, 'LUNAS', '2023-06-03 15:20:12'),
+(9, 1, 5, '2023-05-19', 1, 'LUNAS', '2023-06-03 15:13:10'),
+(10, 1, 0, '2023-06-03', 1, 'LUNAS', '2023-06-03 15:13:10'),
+(11, 2, 0, '2023-06-03', 1, 'LUNAS', '2023-06-03 15:13:10'),
+(12, 1, 0, '2023-06-03', 3, 'LUNAS', '2023-06-03 15:13:10'),
+(13, 2, 7, '2023-06-03', 3, 'LUNAS', '2023-06-03 15:21:32'),
+(14, 2, 0, '2023-06-03', 2, 'LUNAS', '2023-06-03 15:13:10'),
+(15, 1, 7, '2023-06-03', 2, 'MENUNGGU VALIDASI', '2023-06-03 15:18:59');
 
 -- --------------------------------------------------------
 
@@ -98,6 +126,12 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `name`, `pho
 --
 
 --
+-- Indexes for table `bukti_pembayaran`
+--
+ALTER TABLE `bukti_pembayaran`
+  ADD PRIMARY KEY (`id_bukti`);
+
+--
 -- Indexes for table `lapangan`
 --
 ALTER TABLE `lapangan`
@@ -121,6 +155,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `bukti_pembayaran`
+--
+ALTER TABLE `bukti_pembayaran`
+  MODIFY `id_bukti` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `lapangan`
 --
 ALTER TABLE `lapangan`
@@ -130,7 +170,7 @@ ALTER TABLE `lapangan`
 -- AUTO_INCREMENT for table `pemesanan`
 --
 ALTER TABLE `pemesanan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `users`
