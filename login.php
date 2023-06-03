@@ -34,6 +34,7 @@ if(isset($_POST['login'])) {
   
       //memeriksa role pengguna dan mengarahkan ke halaman dashboard yang sesuai
       if($role == 'admin') {
+        $_SESSION['role'] = $role;
         header("Location: admin/index.php");
       } else {
         if($lapang){

@@ -15,7 +15,6 @@
             <?php if(isset($isLogin)) : ?>
                 <li><a href="./pesanan.php" class="nav-link px-2 link-dark">Pesanan</a></li>
                 <li><a href="./riwayat-pesanan.php" class="nav-link px-2 link-dark">Riwayat Pesanan</a></li>
-                <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
             <?php endif ?>
         </ul>
 

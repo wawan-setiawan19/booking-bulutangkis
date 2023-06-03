@@ -31,34 +31,26 @@
     const btnBooking = document.querySelector("#bookingBtn");
     const msgText = document.querySelector(".message");
     btnBooking.addEventListener("click",()=>{
-        <?php
-
-            $id = $_SESSION['id'];
-            $query = "SELECT * FROM pemesanan WHERE tanggal = '$tanggal' AND id_lapangan = '$lapang' AND waktu = '$jam'";
-            $result = mysqli_query($conn, $query);
-            if(mysqli_num_rows($result) > 0){
-                $status = false;
-            }else{
-                $status = true;
-            }
-        ?>
-        <?php if($status) :?>
-            <?php
-                $insert = "INSERT INTO `pemesanan` (`id_lapangan`, `id_user`, `tanggal`, `waktu`, `status`, `expired`) VALUES ('$lapang', '$id', '$tanggal', '$jam', 'MENUNGGU PEMBAYARAN', '$timestamp')";
-                $exec = mysqli_query($conn, $insert);
-            ?>
-            msgText.innerHTML = `
+        var xmlHttpReq = new XMLHttpRequest();
+        xmlHttpReq.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                msgText.innerHTML = `
                 Pesanan anda berhasil terkonfirmasi!!
                 <?= $timestamp ?>
                 <a href="./pesanan.php" class="btn btn-primary">Cek Status Pesanan</a>
-            `
-        <?php else : ?>
-            msgText.innerHTML = `
+                `
+              window.location.href = './pesanan.php'
+            }else{
+                msgText.innerHTML = `
             <div class="p-2">
                 silakan ganti pesanan
                 <a href="./cek-lapang.php" class="btn btn-primary">Ganti Pesanan</a>
             </div>
             `
-        <?php endif ?>
+            }
+        }
+
+        xmlHttpReq.open("GET", `proses-booking.php?lapang=<?=$lapang?>&jam=<?=$jam?>&tanggal=<?=$tanggal?>`)
+        xmlHttpReq.send()
     })
 </script>
