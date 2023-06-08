@@ -34,19 +34,19 @@
         var xmlHttpReq = new XMLHttpRequest();
         xmlHttpReq.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
-                msgText.innerHTML = `
-                Pesanan anda berhasil terkonfirmasi!!
-                <?= $timestamp ?>
-                <a href="./pesanan.php" class="btn btn-primary">Cek Status Pesanan</a>
-                `
-              window.location.href = './pesanan.php'
+                Swal.fire({
+                    icon: "success",
+                    title: "Berhasil Pesan",
+                    text: "Pesanan anda berhasil terkonfirmasi!",
+                }).then(function(){
+                    window.location.href = './pesanan.php'
+                })
             }else{
-                msgText.innerHTML = `
-            <div class="p-2">
-                silakan ganti pesanan
-                <a href="./cek-lapang.php" class="btn btn-primary">Ganti Pesanan</a>
-            </div>
-            `
+                Swal.fire({
+                    icon: "error",
+                    title: "Gagal Pesan",
+                    text: "Silakan Ganti Pesanan",
+                })
             }
         }
 

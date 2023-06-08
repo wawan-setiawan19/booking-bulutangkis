@@ -1,12 +1,13 @@
 <?php 
 
 require_once("config.php");
+require_once("./components/head.php");
+require_once("./components/nav.php");
   $lapang = isset($_GET['lapang'])?$_GET['lapang']:'';
   $jam = isset($_GET['jam'])?$_GET['jam']:'';
   $tanggal = isset($_GET['tanggal'])?$_GET['tanggal']:'';
 //memeriksa apakah form login telah di-submit
 if(isset($_POST['login'])) {
-
     //menangkap nilai username dan password yang dimasukkan oleh pengguna
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
@@ -20,7 +21,6 @@ if(isset($_POST['login'])) {
     
       //memeriksa apakah nilai terenkripsi dari input pengguna sama dengan nilai terenkripsi yang tersimpan dalam database
       if(password_verify($password, $hashed_password)) {
-    
         //menangkap nilai role dari pengguna yang berhasil login
         $query = "SELECT * FROM users WHERE username = '$username'";
         $result = mysqli_query($conn, $query);
@@ -29,33 +29,64 @@ if(isset($_POST['login'])) {
         session_start();
         $_SESSION['username'] = $username;
         $_SESSION['id'] = $row['id'];
-    }
-
-  
-      //memeriksa role pengguna dan mengarahkan ke halaman dashboard yang sesuai
-      if($role == 'admin') {
-        $_SESSION['role'] = $role;
-        header("Location: admin/index.php");
-      } else {
-        if($lapang){
-          $link = "./booking.php?lapang=".$lapang."&jam=".$jam."&tanggal=".$tanggal;
-          header('Location:'.$link);
-        }else{
-          header("Location: dashboard.php");
+        if($role == 'admin') {
+          $_SESSION['role'] = $role;
+          echo '<script>
+          Swal.fire({
+            icon: "success",
+            title: "Login Successful",
+            text: "Welcome, '.$username.'!",
+          }).then(function() {
+            window.location.href = "admin/index.php";
+          });
+        </script>';
+        } else {
+          if($lapang){
+            $link = "./booking.php?lapang=".$lapang."&jam=".$jam."&tanggal=".$tanggal;
+            echo '<script>
+              Swal.fire({
+                icon: "success",
+                title: "Login Successful",
+                text: "Welcome, '.$username.'!",
+              }).then(function(){
+                window.location.href = "'.$link.'"
+              })
+            </script>';
+            // header("Location: ".$link);
+          }else{
+            echo '<script>
+              Swal.fire({
+                icon: "success",
+                title: "Login Berhasil",
+                text: "Welcome, '.$username.'!",
+              }).then(function() {
+                window.location.href = "dashboard.php";
+              });
+            </script>';
+          }
         }
+      }else{
+        echo '<script>
+          Swal.fire({
+            icon: "error",
+            title: "Password Salah",
+            text: "Password yang anda masukkan tidak benar",
+          });
+        </script>';
       }
-  
     } else {
       //jika username dan password tidak sesuai dengan informasi yang tersimpan dalam tabel users
-      echo "Username atau password salah!";
+      echo '<script>
+          Swal.fire({
+            icon: "error",
+            title: "Login Gagal",
+            text: "Username atau Password Salah",
+          });
+        </script>';
     }
-  
   }
 
 ?>
-
-<?php require_once("./components/head.php");?>
-<?php require_once("./components/nav.php");?>
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-12">

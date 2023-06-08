@@ -3,8 +3,10 @@
         $isLogin = true;
     }
 
-    $server_admin = $_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["SERVER_NAME"].'/booking_bultang/admin';
-$server_root = $_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["SERVER_NAME"].'/booking_bultang';
+    $requestURI = explode("/", $_SERVER['REQUEST_URI']);
+
+    $server_admin = $_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["SERVER_NAME"].':'.$_SERVER['SERVER_PORT']."/".$requestURI[1].'/admin';
+    $server_root = $_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["SERVER_NAME"]."/".$requestURI[1].'';
 ?>
 <div class="container">
         <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
